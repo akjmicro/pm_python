@@ -225,20 +225,20 @@ class Output:
             PmPtr = NULL
         else:
             PmPtr = <PmTimeProcPtr>&Pt_Time
-        if self.debug: print "Opening Midi Output"
+        if self.debug: print("Opening Midi Output")
 	# Why is bufferSize 0 here?
         err = Pm_OpenOutput(&(self.midi), self.i, NULL, 0, PmPtr, NULL, latency)
         if err < 0:
                 s = Pm_GetErrorText(err)
                 # Something's amiss here - if we try to throw an Exception
-               	# here, we crash.
+                # here, we crash.
                 if not err == -10000:
                         raise Exception,s
                 else:
-                        print "Unable to open Midi OutputDevice=",OutputDevice," err=",s
+                        print("Unable to open Midi OutputDevice=",OutputDevice," err=", s)
 
     def __dealloc__(self):
-        if self.debug: print "Closing MIDI output stream and destroying instance"
+        if self.debug: print("Closing MIDI output stream and destroying instance")
         #err = Pm_Abort(self.midi)
         #if err < 0: raise Exception, Pm_GetErrorText(err)
         err = Pm_Close(self.midi)
@@ -325,8 +325,8 @@ Write(data)
                 for i in range(len(data[loop1][0])):
                     buffer[loop1].message = buffer[loop1].message + ((data[loop1][0][i]&0xFF) << (8*i))
                 buffer[loop1].timestamp = data[loop1][1]
-                if self.debug: print loop1," : ",buffer[loop1].message," : ",buffer[loop1].timestamp
-        if self.debug: print "writing to midi buffer"
+                if self.debug: print(loop1, " : ", buffer[loop1].message," : ", buffer[loop1].timestamp)
+        if self.debug: print("writing to midi buffer")
         err= Pm_Write(self.midi, buffer, len(data))
         if err < 0: raise Exception, Pm_GetErrorText(err)
         
@@ -349,7 +349,7 @@ WriteShort(status <, data1><, data2>)
 
         buffer[0].timestamp = Pt_Time()
         buffer[0].message = ((((data2) << 16) & 0xFF0000) | (((data1) << 8) & 0xFF00) | ((status) & 0xFF))
-        if self.debug: print "Writing to MIDI buffer"
+        if self.debug: print("Writing to MIDI buffer")
         err = Pm_Write(self.midi, buffer, 1) # stream, buffer, length
         if err < 0 : raise Exception, Pm_GetErrorText(err)
 
@@ -407,11 +407,11 @@ class Input:
         self.debug = 0
         err= Pm_OpenInput(&(self.midi),self.i,NULL,buffersize,&Pt_Time,NULL)
         if err < 0: raise Exception, Pm_GetErrorText(err)
-        if self.debug: print "MIDI input opened."
+        if self.debug: print("MIDI input opened.")
 
     def __dealloc__(self):
         cdef PmError err
-        if self.debug: print "Closing MIDI input stream and destroying instance"
+        if self.debug: print("Closing MIDI input stream and destroying instance")
 
         err = Pm_Close(self.midi)
         if err < 0:
