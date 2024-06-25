@@ -4,12 +4,13 @@ requires = ["cython", "setuptools"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "pyportmidi"
-version = "0.0.8"
+name = "pm_python"
+version = "0.0.9"
 maintainers = [
   {name="Aaron Krister Johnson", email="akjmicro@gmail.com"}
 ]
 description = "Python Wrappings for PortMidi"
+readme = "README.md"
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
@@ -30,4 +31,4 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "http://pypi.org/pyportmidi/"
+Homepage = "http://pypi.org/pm_python/"
