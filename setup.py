@@ -7,86 +7,13 @@ from setuptools import setup, Command, Extension
 from Cython.Distutils import build_ext
 
 
-DESCRIPTION = open("README.md").read()
-
-EXTRAS = {
-    "include_package_data": True,
-    "install_requires": [],
-    "zip_safe": False,
-}
-
-long_description = DESCRIPTION
-
-
-METADATA = {
-    "name": "pyportmidi",
-    "version": "0.0.7",
-    "license": "MIT License",
-    "url": "http://pypi.python.org/pyportmidi/",
-    "author": "John Harrison, Roger B. Dannenberg, Rene Dudfield, others...",
-    "author_email": "renesd@gmail.com",
-    "maintainer": "Rene Dudfield",
-    "maintainer_email": "renesd@gmail.com",
-    "description": "Python Wrappings for PortMidi",
-    "long_description": long_description,
-    "classifiers": [
-        "Development Status :: 2 - Pre-Alpha",
-        "Intended Audience :: Developers",
-        "Intended Audience :: Information Technology",
-        "License :: OSI Approved :: BSD License",
-        "Operating System :: MacOS :: MacOS X",
-        "Operating System :: Microsoft :: Windows",
-        "Operating System :: POSIX :: Linux",
-        "Programming Language :: Cython",
-        "Programming Language :: C",
-        "Programming Language :: Python :: 2",
-        "Programming Language :: Python :: 2.5",
-        "Programming Language :: Python :: 2.6",
-        "Programming Language :: Python :: 2.7",
-        "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.0",
-        "Programming Language :: Python :: 3.1",
-        "Programming Language :: Python :: 3.2",
-        "Topic :: Multimedia :: Sound/Audio :: MIDI",
-        "Topic :: Software Development :: Libraries",
-    ],
-}
-
-
-if "bdist_msi" in sys.argv:
-    # hack the version name to a format msi doesn't have trouble with
-    METADATA["version"] = METADATA["version"].replace("pre", "a0")
-    METADATA["version"] = METADATA["version"].replace("rc", "b0")
-    METADATA["version"] = METADATA["version"].replace("release", "")
-
-
-cmdclass = {"build_ext": build_ext}
-
-scripts = []
-
-PACKAGEDATA = {
-    "cmdclass": cmdclass,
-    "package_dir": {
-        "pyportmidi": "pyportmidi",
-    },
-    "packages": [
-        "pyportmidi",
-    ],
-    "scripts": scripts,
-}
-
-
-PACKAGEDATA.update(METADATA)
-PACKAGEDATA.update(EXTRAS)
-
-
 if sys.platform == "win32":
     print("Found Win32 platform")
-    EXTENSION = dict(
+    setup(
         ext_modules=[
             Extension(
                 "pyportmidi._pyportmidi",
-                [os.path.join("pyportmidi", "_pyportmidi.pyx")],
+                [os.path.join("src", "pyportmidi", "_pyportmidi.pyx")],
                 library_dirs=["../Release"],
                 libraries=["portmidi", "winmm"],
                 include_dirs=["../porttime"],
@@ -98,11 +25,11 @@ elif sys.platform == "darwin":
     print("Found darwin (OS X) platform")
     library_dirs = ["/usr/local/lib"]
     include_dirs = ["/usr/local/include"]
-    EXTENSION = dict(
+    setup(
         ext_modules=[
             Extension(
                 "pyportmidi._pyportmidi",
-                [os.path.join("pyportmidi", "_pyportmidi.pyx")],
+                [os.path.join("src", "pyportmidi", "_pyportmidi.pyx")],
                 library_dirs=library_dirs,
                 include_dirs=include_dirs,
                 libraries=["portmidi"],
@@ -119,17 +46,13 @@ elif sys.platform == "darwin":
     )
 else:
     print("Assuming Linux platform")
-    EXTENSION = dict(
+    setup(
         ext_modules=[
             Extension(
                 "pyportmidi._pyportmidi",
-                [os.path.join("pyportmidi", "_pyportmidi.pyx")],
+                [os.path.join("src", "pyportmidi", "_pyportmidi.pyx")],
                 library_dirs=["./linux"],
                 libraries=["portmidi", "asound", "pthread"],
             )
         ]
     )
-
-PACKAGEDATA.update(EXTENSION)
-
-setup(**PACKAGEDATA)

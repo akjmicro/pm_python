@@ -116,7 +116,7 @@ def pm_get_default_input_id():
     "In USB MidiSport 1x1", then that will be the default
     input because it contains the string "USB".
 
-    In addition to the name, get_device_info() returns "interf", which
+    In addition to the name, pm_get_device_info() returns "interf", which
     is the interface name. (The "interface" is the underlying software
     system or API used by PortMidi to access devices. Examples are
     MMSystem, DirectX (not implemented), ALSA, OSS (not implemented), etc.)
@@ -165,7 +165,7 @@ def pm_get_default_output_id():
     "In USB MidiSport 1x1", then that will be the default
     input because it contains the string "USB".
 
-    In addition to the name, get_device_info() returns "interf", which
+    In addition to the name, pm_get_device_info() returns "interf", which
     is the interface name. (The "interface" is the underlying software
     system or API used by PortMidi to access devices. Examples are
     MMSystem, DirectX (not implemented), ALSA, OSS (not implemented), etc.)
@@ -234,7 +234,7 @@ class PmInput(object):
             )
 
         try:
-            r = get_device_info(device_id)
+            r = pm_get_device_info(device_id)
         except TypeError:
             raise TypeError("an integer is required")
         except OverflowError:
@@ -370,7 +370,7 @@ class PmOutput(object):
             )
 
         try:
-            r = get_device_info(device_id)
+            r = pm_get_device_info(device_id)
         except TypeError:
             raise TypeError("an integer is required")
         except OverflowError:

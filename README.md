@@ -6,6 +6,9 @@
 Note: This repo is probably obsolete. Updates, maintainer, tester,
 etc. are welcome. Please contact the PortMidi admins. -RBD, 2021
 
+I, Aaron Krister Johnson <akjmicro@gmail.com>, am volunteering to maintain
+and modernize this code.
+
 
 PyPortMidi
 ----------
