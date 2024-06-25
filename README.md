@@ -28,6 +28,7 @@ pm-python works with Python 3.x and may also work with Python 2.6
 Example usage
 -------------
 
+```
 >>> from pyportmidi import *
 >>> pm_init()
 >>> pm_show_all_devices()
@@ -45,6 +46,7 @@ DEVNUM: 9 | ALSA VirMIDI 1-3 - INPUT
 >>> out.note_on(60, 100)
 >>> out.note_off(60)
 >>> pm_quit()
+```
 
 There remain certain possible bugs relating to closing the actual
 PmInput/PmOutput objects with `.close()`. As I know the solution,
